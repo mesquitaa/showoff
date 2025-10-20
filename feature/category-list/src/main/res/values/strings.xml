@@ -2,4 +2,5 @@
 <resources>
   <string name="no_values_found">No values found</string>
   <string name="retry">Retry</string>
+  <string name="content_description_category_thumbnail">Category Thumbnail</string>
 </resources>

@@ -15,7 +15,11 @@ fun MealNavigation(navController: NavHostController = rememberNavController()) {
     startDestination = Routes.RecipeCategoriesList.route,
   ) {
     composable(Routes.RecipeCategoriesList.route) {
-      Text("Recipe Categories List")
+      CategoryListScreen(
+        onNavigateToDetails = { categoryId ->
+          navController.navigate(Routes.RecipeListByCategory.createRoute(categoryId))
+        },
+      )
     }
 
     composable(
