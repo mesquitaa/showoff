@@ -28,6 +28,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import coil.compose.AsyncImage
 import com.rpm.category.list.state.CategoryListUiAction
 import com.rpm.category.list.state.CategoryListUiEffect
@@ -43,14 +47,18 @@ fun CategoryListScreen(
   onNavigateToDetails: (String) -> Unit,
   viewModel: CategoryListViewModel = koinViewModel(),
 ) {
-  val uiState by viewModel.uiState.collectAsState()
+  val lifecycleOwner = LocalLifecycleOwner.current
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
   LaunchedEffect(Unit) {
     viewModel.handleAction(CategoryListUiAction.LoadData)
 
-    viewModel.uiEffect.collect { effect ->
-      when (effect) {
-        is CategoryListUiEffect.NavigateToCategoryList -> onNavigateToDetails(effect.category)
+    lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+      viewModel.uiEffect.collect { effect ->
+        when (effect) {
+          is CategoryListUiEffect.NavigateToCategoryList ->
+            onNavigateToDetails(effect.category)
+        }
       }
     }
   }
