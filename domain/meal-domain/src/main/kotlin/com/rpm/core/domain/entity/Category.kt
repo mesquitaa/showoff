@@ -1,4 +1,4 @@
-package com.rpm.core.domain
+package com.rpm.core.domain.entity
 
 import com.google.gson.annotations.SerializedName
 

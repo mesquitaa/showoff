@@ -20,8 +20,7 @@ dependencies {
 
   implementation(libs.converter.gson)
 
-  testImplementation(libs.junit.jupiter)
-  testRuntimeOnly(libs.junit.vintage.engine)
+  testImplementation(libs.junit)
   testImplementation(libs.mockk)
   testImplementation(libs.coroutines.test)
 }
