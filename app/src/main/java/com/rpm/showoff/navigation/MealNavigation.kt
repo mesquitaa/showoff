@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.rpm.category.list.ui.CategoryListScreen
+import com.rpm.recipe.by.categories.ui.MealByCategoryScreen
 
 @Composable
 fun MealNavigation(navController: NavHostController = rememberNavController()) {
@@ -26,7 +27,20 @@ fun MealNavigation(navController: NavHostController = rememberNavController()) {
       route = Routes.RecipeListByCategory.route,
       arguments = Routes.RecipeListByCategory.arguments,
     ) { backStackEntry ->
-      Text("Recipe Categories By Category")
+      val categoryName = backStackEntry.arguments?.getString(CATEGORY_NAME).orEmpty()
+
+      MealByCategoryScreen(
+        category = categoryName,
+        onNavigateToRecipe = { mealId ->
+          navController.navigate(Routes.MealRecipe.createRoute(mealId))
+        },
+        onBackPressed = navController::popBackStack,
+      )
+    }
+
+    composable(Routes.MealRecipe.route) { backStackEntry ->
+      val recipeId = backStackEntry.arguments?.getString(RECIPE_ID)?.toInt() ?: 0
+      Text(text = "Meal Recipe $recipeId")
     }
   }
 }

@@ -53,6 +53,7 @@ dependencies {
   implementation(project(":core:core-network"))
   implementation(project(":core:core-ui"))
   implementation(project(":feature:category-list"))
+  implementation(project(":feature:recipe-by-category-list"))
 
   // AndroidX
   implementation(libs.androidx.core.ktx)

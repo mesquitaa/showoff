@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="content_description_category_thumbnail">Category Thumbnail</string>
+  <string name="back">Back</string>
 </resources>
