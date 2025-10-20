@@ -1,4 +1,4 @@
-package com.rpm.showoff.ui.theme
+package com.rpm.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -50,6 +50,9 @@ kotlin {
 }
 
 dependencies {
+  implementation(project(":core:core-network"))
+  implementation(project(":core:core-ui"))
+
   // AndroidX
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.lifecycle.runtime.ktx)
