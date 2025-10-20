@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="no_values_found">No values found</string>
   <string name="error">Error</string>
   <string name="retry">Retry</string>
 </resources>

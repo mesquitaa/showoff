@@ -2,7 +2,6 @@ package com.rpm.category.list.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,9 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -26,7 +23,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -41,6 +37,7 @@ import com.rpm.category.list.state.MealsByCategoryUiAction
 import com.rpm.category.list.state.MealsByCategoryUiEffect
 import com.rpm.category.list.viewmodel.MealsByCategoryViewModel
 import com.rpm.core.domain.entity.Meal
+import com.rpm.core.ui.components.EmptyState
 import com.rpm.core.ui.components.ErrorBox
 import com.rpm.core.ui.components.LoadingIndicator
 import com.rpm.recipe.by.categories.R
@@ -104,19 +101,6 @@ fun MealByCategoryScreen(
         }
       }
     }
-  }
-}
-
-@Composable
-private fun EmptyState() {
-  Box(
-    modifier = Modifier.fillMaxSize(),
-    contentAlignment = Alignment.Center,
-  ) {
-    Text(
-      text = stringResource(R.string.no_values_found),
-      style = MaterialTheme.typography.bodyLarge,
-    )
   }
 }
 
