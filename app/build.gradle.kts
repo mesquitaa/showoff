@@ -50,6 +50,7 @@ kotlin {
 }
 
 dependencies {
+  // AndroidX
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.lifecycle.runtime.ktx)
   implementation(libs.androidx.activity.compose)
@@ -58,18 +59,38 @@ dependencies {
   implementation(libs.androidx.ui.graphics)
   implementation(libs.androidx.ui.tooling.preview)
   implementation(libs.androidx.material3)
-  testImplementation(libs.junit)
-  androidTestImplementation(libs.androidx.junit)
-  androidTestImplementation(libs.androidx.espresso.core)
-  androidTestImplementation(platform(libs.androidx.compose.bom))
-  androidTestImplementation(libs.androidx.ui.test.junit4)
   debugImplementation(libs.androidx.ui.tooling)
   debugImplementation(libs.androidx.ui.test.manifest)
+
+  // Navigation
+  implementation(libs.androidx.navigation.compose)
+
+  // ViewModel
+  implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+  // Retrofit & OkHttp
+  implementation(libs.retrofit)
+  implementation(libs.converter.gson)
+  implementation(libs.logging.interceptor)
+
+  // Coroutines
+  implementation(libs.kotlinx.coroutines.android)
+
+  // Dependency Injection
+  implementation(libs.koin.android)
+  implementation(libs.koin.androidx.compose)
 
   // Unit Test
   testImplementation(kotlin("test"))
   testImplementation(libs.junit.jupiter)
   testRuntimeOnly(libs.junit.vintage.engine)
+  testImplementation(libs.coroutines.test)
+
+  // Ui Test
+  androidTestImplementation(libs.androidx.junit)
+  androidTestImplementation(libs.androidx.espresso.core)
+  androidTestImplementation(platform(libs.androidx.compose.bom))
+  androidTestImplementation(libs.androidx.ui.test.junit4)
 }
 
 apply(from = rootProject.file("config/ktlint/ktlint.gradle.kts"))
