@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class CategoryListRepositoryTest {
-
   private val mockApi = mockk<CategoryListApi>(relaxed = true)
 
   private val subject by lazy {
@@ -31,7 +30,7 @@ class CategoryListRepositoryTest {
           thumb = FAKE_THUMB,
           category = FAKE_CATEGORY,
           description = FAKE_DESCRIPTION,
-        )
+        ),
       ),
     )
 

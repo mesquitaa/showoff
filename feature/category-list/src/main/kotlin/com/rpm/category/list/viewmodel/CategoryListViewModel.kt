@@ -17,11 +17,10 @@ import kotlinx.coroutines.launch
 class CategoryListViewModel(
   private val listUseCase: CategoryListUseCase,
 ) : ViewModel() {
-
-  internal val _uiState = MutableStateFlow(CategoryListUiSection())
+  private val _uiState = MutableStateFlow(CategoryListUiSection())
   val uiState: StateFlow<CategoryListUiSection> = _uiState.asStateFlow()
 
-  internal val _uiEffect = MutableSharedFlow<CategoryListUiEffect>()
+  private val _uiEffect = MutableSharedFlow<CategoryListUiEffect>()
   val uiEffect: SharedFlow<CategoryListUiEffect> = _uiEffect.asSharedFlow()
 
   fun handleAction(action: CategoryListUiAction) {
@@ -36,18 +35,19 @@ class CategoryListViewModel(
   private fun loadCategories() = viewModelScope.launch {
     _uiState.value = _uiState.value.copy(isLoading = true, error = null)
     listUseCase.invoke().collect { result ->
-      result.onSuccess { categories ->
-        _uiState.value = _uiState.value.copy(
-          categories = categories.orEmpty(),
-          isLoading = false,
-          error = null,
-        )
-      }.onFailure { throwable ->
-        _uiState.value = _uiState.value.copy(
-          isLoading = false,
-          error = throwable.message ?: "Unknown error occurred",
-        )
-      }
+      result
+        .onSuccess { categories ->
+          _uiState.value = _uiState.value.copy(
+            categories = categories.orEmpty(),
+            isLoading = false,
+            error = null,
+          )
+        }.onFailure { throwable ->
+          _uiState.value = _uiState.value.copy(
+            isLoading = false,
+            error = throwable.message ?: "Unknown error occurred",
+          )
+        }
     }
   }
 }
