@@ -1,9 +1,7 @@
 package com.rpm.category.list.usecase
 
-import com.rpm.core.domain.entity.Category
 import com.rpm.core.domain.entity.Meal
 import com.rpm.core.domain.repository.MealByCategoryRepository
-import com.rpm.core.domain.repository.MealCategoryRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
@@ -19,7 +17,7 @@ class MealsByCategoryUseCaseTest {
   @Test
   fun `invoke when repository returns success then should emit success`() = runTest {
     // GIVEN
-    val mockList = listOf(Meal(1, "meal", "url"))
+    val mockList = listOf(Meal(1, FAKE_MEAL, FAKE_THUMB))
     coEvery { mockRepository.getMealsByCategory(FAKE_CATEGORY) } returns flowOf(mockList)
 
     // WHEN
@@ -43,6 +41,8 @@ class MealsByCategoryUseCaseTest {
   }
 
   companion object {
-    private const val FAKE_CATEGORY = "FAKE_CATEGORY"
+    private const val FAKE_CATEGORY = "FAKE CATEGORY"
+    private const val FAKE_MEAL = "FAKE MEAL"
+    private const val FAKE_THUMB = "FAKE THUMB"
   }
 }
