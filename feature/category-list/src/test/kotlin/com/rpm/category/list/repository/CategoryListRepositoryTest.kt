@@ -22,7 +22,7 @@ class CategoryListRepositoryTest {
   }
 
   @Test
-  fun `searchMovies returns movies from api`() = runTest {
+  fun `getCategories - should return list of categories`() = runTest {
     // GIVEN
     coEvery { mockApi.getCategories() } returns CategoryListResponse(
       categories = listOf(
