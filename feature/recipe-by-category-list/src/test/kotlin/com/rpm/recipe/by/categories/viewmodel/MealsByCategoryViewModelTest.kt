@@ -1,9 +1,9 @@
-package com.rpm.category.list.viewmodel
+package com.rpm.recipe.by.categories.viewmodel
 
-import com.rpm.category.list.state.MealsByCategoryUiAction
-import com.rpm.category.list.state.MealsByCategoryUiEffect
-import com.rpm.category.list.usecase.MealsByCategoryUseCase
 import com.rpm.core.domain.entity.Meal
+import com.rpm.recipe.by.categories.state.MealsByCategoryUiAction
+import com.rpm.recipe.by.categories.state.MealsByCategoryUiEffect
+import com.rpm.recipe.by.categories.usecase.MealsByCategoryUseCase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

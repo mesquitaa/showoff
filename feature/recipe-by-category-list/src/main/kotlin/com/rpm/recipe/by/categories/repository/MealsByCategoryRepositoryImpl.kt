@@ -1,7 +1,7 @@
-package com.rpm.category.list.repository
+package com.rpm.recipe.by.categories.repository
 
-import com.rpm.category.list.api.MealByCategoryApi
 import com.rpm.core.domain.repository.MealByCategoryRepository
+import com.rpm.recipe.by.categories.api.MealByCategoryApi
 import kotlinx.coroutines.flow.flow
 
 class MealsByCategoryRepositoryImpl(

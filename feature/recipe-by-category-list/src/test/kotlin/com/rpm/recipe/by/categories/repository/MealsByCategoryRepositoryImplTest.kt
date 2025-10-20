@@ -1,8 +1,8 @@
-package com.rpm.category.list.repository
+package com.rpm.recipe.by.categories.repository
 
-import com.rpm.category.list.api.MealByCategoryApi
 import com.rpm.core.domain.entity.Meal
 import com.rpm.core.domain.entity.MealResponse
+import com.rpm.recipe.by.categories.api.MealByCategoryApi
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

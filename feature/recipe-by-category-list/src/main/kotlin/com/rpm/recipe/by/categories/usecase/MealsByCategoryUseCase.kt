@@ -1,4 +1,4 @@
-package com.rpm.category.list.usecase
+package com.rpm.recipe.by.categories.usecase
 
 import com.rpm.core.domain.entity.Meal
 import com.rpm.core.domain.repository.MealByCategoryRepository

@@ -1,4 +1,4 @@
-package com.rpm.category.list.api
+package com.rpm.recipe.by.categories.api
 
 import com.rpm.core.domain.entity.MealResponse
 import retrofit2.http.GET

@@ -1,4 +1,4 @@
-package com.rpm.category.list.state
+package com.rpm.recipe.by.categories.state
 
 sealed class MealsByCategoryUiEffect {
   data class NavigateToRecipeDetails(

@@ -1,11 +1,11 @@
-package com.rpm.category.list.viewmodel
+package com.rpm.recipe.by.categories.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rpm.category.list.state.MealsByCategoryUiAction
-import com.rpm.category.list.state.MealsByCategoryUiEffect
-import com.rpm.category.list.state.MealsByCategoryUiSection
-import com.rpm.category.list.usecase.MealsByCategoryUseCase
+import com.rpm.recipe.by.categories.state.MealsByCategoryUiAction
+import com.rpm.recipe.by.categories.state.MealsByCategoryUiEffect
+import com.rpm.recipe.by.categories.state.MealsByCategoryUiSection
+import com.rpm.recipe.by.categories.usecase.MealsByCategoryUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow

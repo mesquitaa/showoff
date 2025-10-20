@@ -1,4 +1,4 @@
-package com.rpm.category.list.ui
+package com.rpm.recipe.by.categories.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,14 +33,14 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import coil.compose.AsyncImage
-import com.rpm.category.list.state.MealsByCategoryUiAction
-import com.rpm.category.list.state.MealsByCategoryUiEffect
-import com.rpm.category.list.viewmodel.MealsByCategoryViewModel
 import com.rpm.core.domain.entity.Meal
 import com.rpm.core.ui.components.EmptyState
 import com.rpm.core.ui.components.ErrorBox
 import com.rpm.core.ui.components.LoadingIndicator
 import com.rpm.recipe.by.categories.R
+import com.rpm.recipe.by.categories.state.MealsByCategoryUiAction
+import com.rpm.recipe.by.categories.state.MealsByCategoryUiEffect
+import com.rpm.recipe.by.categories.viewmodel.MealsByCategoryViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

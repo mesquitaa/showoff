@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.rpm.category.list.ui.CategoryListScreen
-import com.rpm.category.list.ui.MealByCategoryScreen
+import com.rpm.recipe.by.categories.ui.MealByCategoryScreen
 
 @Composable
 fun MealNavigation(navController: NavHostController = rememberNavController()) {

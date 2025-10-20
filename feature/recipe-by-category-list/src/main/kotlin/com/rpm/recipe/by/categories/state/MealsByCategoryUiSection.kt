@@ -1,4 +1,4 @@
-package com.rpm.category.list.state
+package com.rpm.recipe.by.categories.state
 
 import com.rpm.core.domain.entity.Meal
 
