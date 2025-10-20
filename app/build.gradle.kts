@@ -52,6 +52,7 @@ kotlin {
 dependencies {
   implementation(project(":core:core-network"))
   implementation(project(":core:core-ui"))
+  implementation(project(":feature:category-list"))
 
   // AndroidX
   implementation(libs.androidx.core.ktx)
@@ -90,7 +91,6 @@ dependencies {
   testImplementation(libs.coroutines.test)
 
   // Ui Test
-  androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.espresso.core)
   androidTestImplementation(platform(libs.androidx.compose.bom))
   androidTestImplementation(libs.androidx.ui.test.junit4)
