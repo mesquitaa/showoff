@@ -19,10 +19,6 @@ dependencies {
   implementation(libs.kotlinx.coroutines.android)
 
   implementation(libs.converter.gson)
-
-  testImplementation(libs.junit)
-  testImplementation(libs.mockk)
-  testImplementation(libs.coroutines.test)
 }
 
 apply(from = rootProject.file("config/ktlint/ktlint.gradle.kts"))

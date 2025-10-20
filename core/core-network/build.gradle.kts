@@ -17,7 +17,7 @@ android {
     }
     val apiKey: String = localProps.getProperty("API_KEY") ?: ""
     buildConfigField("String", "API_KEY", "\"$apiKey\"")
-    buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
+    buildConfigField("String", "BASE_URL", "\"https://www.themealdb.com/api/json/\"")
   }
 
   buildFeatures {
