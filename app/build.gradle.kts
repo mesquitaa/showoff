@@ -6,12 +6,12 @@ plugins {
 
 android {
   namespace = "com.rpm.showoff"
-  compileSdk = 36
+  compileSdk = libs.versions.compileSdk.get().toInt()
 
   defaultConfig {
     applicationId = "com.rpm.showoff"
-    minSdk = 24
-    targetSdk = 36
+    minSdk = libs.versions.minSdk.get().toInt()
+    targetSdk = libs.versions.targetSdk.get().toInt()
     versionCode = 1
     versionName = "1.0"
 
@@ -24,20 +24,32 @@ android {
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
   }
+
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
   }
-  kotlinOptions {
-    jvmTarget = "11"
-  }
+
   buildFeatures {
     compose = true
+    buildConfig = true
+  }
+
+  testOptions {
+    unitTests.isReturnDefaultValues = true
+    unitTests.all {
+      it.useJUnitPlatform()
+    }
+  }
+}
+
+kotlin {
+  compilerOptions {
+    jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
   }
 }
 
 dependencies {
-
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.lifecycle.runtime.ktx)
   implementation(libs.androidx.activity.compose)
@@ -53,6 +65,11 @@ dependencies {
   androidTestImplementation(libs.androidx.ui.test.junit4)
   debugImplementation(libs.androidx.ui.tooling)
   debugImplementation(libs.androidx.ui.test.manifest)
+
+  // Unit Test
+  testImplementation(kotlin("test"))
+  testImplementation(libs.junit.jupiter)
+  testRuntimeOnly(libs.junit.vintage.engine)
 }
 
 apply(from = rootProject.file("config/ktlint/ktlint.gradle.kts"))
