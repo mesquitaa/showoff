@@ -30,7 +30,7 @@ class MealsByCategoryRepositoryImplTest {
           thumb = FAKE_THUMB,
           meal = FAKE_DESCRIPTION,
         ),
-      )
+      ),
     )
 
     // WHEN

@@ -3,7 +3,6 @@ package com.rpm.category.list.viewmodel
 import com.rpm.category.list.state.MealsByCategoryUiAction
 import com.rpm.category.list.state.MealsByCategoryUiEffect
 import com.rpm.category.list.usecase.MealsByCategoryUseCase
-import com.rpm.core.domain.entity.Category
 import com.rpm.core.domain.entity.Meal
 import io.mockk.coEvery
 import io.mockk.coVerify
