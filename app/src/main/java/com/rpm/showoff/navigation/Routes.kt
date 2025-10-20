@@ -4,7 +4,8 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 
-const val CATEGORY_ID = "categoryId"
+const val CATEGORY_NAME = "categoryName"
+const val RECIPE_ID = "categoryId"
 
 sealed class Routes(
   val route: String,
@@ -15,12 +16,22 @@ sealed class Routes(
   )
 
   data object RecipeListByCategory : Routes(
-    route = "category/{$CATEGORY_ID}",
+    route = "category/{$CATEGORY_NAME}",
     arguments =
       listOf(
-        navArgument(CATEGORY_ID) { type = NavType.StringType },
+        navArgument(CATEGORY_NAME) { type = NavType.StringType },
       ),
   ) {
     fun createRoute(categoryName: String) = "category/$categoryName"
+  }
+
+  data object MealRecipe : Routes(
+    route = "meal/{$RECIPE_ID}",
+    arguments =
+      listOf(
+        navArgument(RECIPE_ID) { type = NavType.StringType },
+      ),
+  ) {
+    fun createRoute(mealId: Int) = "meal/$mealId"
   }
 }
