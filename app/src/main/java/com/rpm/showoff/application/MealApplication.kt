@@ -2,6 +2,7 @@ package com.rpm.showoff.application
 
 import android.app.Application
 import com.rpm.category.list.di.categoryListModule
+import com.rpm.category.list.di.mealsByCategoryModule
 import com.rpm.core.network.di.networkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -14,7 +15,7 @@ class MealApplication : Application() {
     startKoin {
       androidLogger()
       androidContext(this@MealApplication)
-      modules(networkModule, categoryListModule)
+      modules(networkModule, categoryListModule, mealsByCategoryModule)
     }
   }
 }
