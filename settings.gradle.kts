@@ -21,4 +21,14 @@ dependencyResolutionManagement {
 
 rootProject.name = "ShowOff"
 include(":app")
- 
+
+// Core modules
+include(":core:core-common")
+include(":core:core-network")
+include(":core:core-ui")
+
+// Domain module
+include(":domain:meal-domain")
+
+// Features module
+include(":feature:category-list")
