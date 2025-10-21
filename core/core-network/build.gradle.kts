@@ -50,6 +50,8 @@ kotlin {
 }
 
 dependencies {
+  implementation(project(":domain:meal-domain"))
+
   // Koin
   implementation(libs.koin.android)
 

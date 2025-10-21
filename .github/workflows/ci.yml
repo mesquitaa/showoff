@@ -26,3 +26,6 @@ jobs:
 
       - name: Run Gradle test
         run: ./gradlew testDebugUnitTest
+
+      - name: Run Domain test
+        run: ./gradlew :domain:meal-domain:test
