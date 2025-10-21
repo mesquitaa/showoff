@@ -5,5 +5,9 @@ sealed class RecipeByIdUiAction {
     val recipeId: String,
   ) : RecipeByIdUiAction()
 
+  data class OpenYoutubeLink(
+    val link: String,
+  ) : RecipeByIdUiAction()
+
   object NavigateBack : RecipeByIdUiAction()
 }

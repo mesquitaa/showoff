@@ -26,6 +26,7 @@ class RecipeByIdViewModel(
   fun handleAction(action: RecipeByIdUiAction) {
     when (action) {
       is RecipeByIdUiAction.NavigateBack -> emit(RecipeByIdUiEffect.NavigateBack)
+      is RecipeByIdUiAction.OpenYoutubeLink -> emit(RecipeByIdUiEffect.OpenYoutubeLink(action.link))
       is RecipeByIdUiAction.LoadData -> loadMealsByCategories(action.recipeId)
     }
   }

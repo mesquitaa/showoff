@@ -33,9 +33,8 @@ class RecipeByIdRepositoryImplTest {
           thumb = FAKE_THUMB,
           youtubeLink = FAKE_YOUTUBE_LINK,
           ingredients = emptyList(),
-          source = FAKE_SOURCE,
         ),
-      )
+      ),
     )
 
     // WHEN
@@ -49,7 +48,6 @@ class RecipeByIdRepositoryImplTest {
     assertEquals(FAKE_DESCRIPTION, result[0].meal)
     assertEquals(FAKE_CATEGORY, result[0].category)
     assertEquals(FAKE_YOUTUBE_LINK, result[0].youtubeLink)
-    assertEquals(FAKE_SOURCE, result[0].source)
     assertEquals(FAKE_INSTRUCTIONS, result[0].instructions)
     assertEquals(emptyList<String>(), result[0].ingredients)
   }
@@ -60,7 +58,6 @@ class RecipeByIdRepositoryImplTest {
     private const val FAKE_CATEGORY = "fake_category"
     private const val FAKE_DESCRIPTION = "fake_description"
     private const val FAKE_YOUTUBE_LINK = "fake_youtube_link"
-    private const val FAKE_SOURCE = "fake_source"
     private const val FAKE_INSTRUCTIONS = "fake_instructions"
   }
 }

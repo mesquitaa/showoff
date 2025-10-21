@@ -1,9 +1,6 @@
 package com.rpm.recipe.by.id.viewmodel
 
-import com.rpm.core.domain.entity.Meal
 import com.rpm.core.domain.entity.Recipe
-import com.rpm.core.domain.entity.RecipeResponse
-import com.rpm.recipe.by.id.repository.RecipeByIdRepositoryImplTest
 import com.rpm.recipe.by.id.state.RecipeByIdUiAction
 import com.rpm.recipe.by.id.state.RecipeByIdUiEffect
 import com.rpm.recipe.by.id.usecase.RecipeByIdUseCase
@@ -61,6 +58,24 @@ class RecipeByIdViewModelTest {
   }
 
   @Test
+  fun `handleAction when OpenYoutubeLink THEN emits OpenYoutubeLink`() = runTest {
+    // GIVEN
+    val effects = mutableListOf<RecipeByIdUiEffect>()
+    val job = launch { subject.uiEffect.toList(effects) }
+
+    // WHEN
+    subject.handleAction(RecipeByIdUiAction.OpenYoutubeLink(FAKE_YOUTUBE_LINK))
+    testDispatcher.scheduler.advanceUntilIdle()
+
+    // THEN
+    assertEquals(1, effects.size)
+    assertEquals(RecipeByIdUiEffect.OpenYoutubeLink(FAKE_YOUTUBE_LINK), effects.first())
+
+    // CANCEL JOB TO AVOID MEMORY LEAKS
+    job.cancel()
+  }
+
+  @Test
   fun `handleAction when LoadData and success THEN uiState updated with meals`() = runTest {
     // GIVEN
     val fakeRecipe = listOf(
@@ -72,7 +87,6 @@ class RecipeByIdViewModelTest {
         thumb = FAKE_THUMB,
         youtubeLink = FAKE_YOUTUBE_LINK,
         ingredients = emptyList(),
-        source = FAKE_SOURCE,
       ),
     )
 
@@ -119,7 +133,6 @@ class RecipeByIdViewModelTest {
     private const val FAKE_DESCRIPTION = "fake_description"
     private const val FAKE_ID = "1"
     private const val FAKE_YOUTUBE_LINK = "fake_youtube_link"
-    private const val FAKE_SOURCE = "fake_source"
     private const val FAKE_INSTRUCTIONS = "fake_instructions"
   }
 }

@@ -26,8 +26,7 @@ class RecipeByIdUseCaseTest {
         thumb = FAKE_THUMB,
         youtubeLink = FAKE_YOUTUBE_LINK,
         ingredients = emptyList(),
-        source = FAKE_SOURCE,
-      )
+      ),
     )
     coEvery { mockRepository.getRecipeBy(FAKE_CATEGORY) } returns flowOf(mockList)
 
@@ -57,7 +56,6 @@ class RecipeByIdUseCaseTest {
     private const val FAKE_CATEGORY = "fake_category"
     private const val FAKE_DESCRIPTION = "fake_description"
     private const val FAKE_YOUTUBE_LINK = "fake_youtube_link"
-    private const val FAKE_SOURCE = "fake_source"
     private const val FAKE_INSTRUCTIONS = "fake_instructions"
   }
 }
