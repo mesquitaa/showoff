@@ -1,21 +1,22 @@
 package com.rpm.recipe.by.id.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -35,21 +36,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.AsyncImage
 import com.rpm.core.domain.entity.Recipe
 import com.rpm.core.ui.components.EmptyState
 import com.rpm.core.ui.components.ErrorBox
@@ -116,105 +116,93 @@ private fun RecipeContent(
   title: MutableState<String>,
   viewModel: RecipeByIdViewModel,
 ) {
+  val recipe = uiState.recipes.first()
+  title.value = recipe.meal
+
   LazyColumn(
-    modifier = Modifier.fillMaxSize(),
+    modifier = Modifier
+      .fillMaxSize()
+      .padding(bottom = 24.dp),
     contentPadding = paddingValues,
     verticalArrangement = Arrangement.spacedBy(16.dp),
   ) {
-    items(uiState.recipes, key = { it.id }) { meal ->
-      title.value = meal.meal
-      RecipeListItem(meal, viewModel)
-    }
+    item { RecipeHeader(recipe) }
+    item { RecipeInfoSection(recipe) }
+    item { RecipeListIngredients(recipe) }
+    item { RecipeListInstructions(recipe) }
+    item { RecipeYoutubeButton { viewModel.handleAction(RecipeByIdUiAction.OpenYoutubeLink(recipe.youtubeLink)) } }
   }
 }
 
 @Composable
-private fun RecipeListItem(recipe: Recipe, viewModel: RecipeByIdViewModel) {
+private fun RecipeHeader(recipe: Recipe) {
   Box(
     modifier = Modifier
-      .fillMaxSize()
-      .background(
-        Brush.verticalGradient(
-          listOf(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background),
-        ),
-      ),
+      .fillMaxWidth()
+      .height(280.dp),
   ) {
+    AsyncImage(
+      model = recipe.thumb,
+      contentDescription = recipe.meal,
+      modifier = Modifier.fillMaxSize(),
+      contentScale = ContentScale.Crop,
+    )
+
+    Box(
+      modifier = Modifier
+        .matchParentSize()
+        .background(
+          Brush.verticalGradient(
+            listOf(Color.Transparent, Color.Black.copy(alpha = 0.6f)),
+            startY = 150f,
+          ),
+        ),
+    )
+
     Column(
       modifier = Modifier
-        .fillMaxSize()
+        .align(Alignment.BottomStart)
         .padding(16.dp),
-      horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-      RecipeListItemHeader(recipe)
-
-      Spacer(Modifier.height(20.dp))
-
       Text(
         recipe.meal,
         style = MaterialTheme.typography.headlineSmall.copy(
+          color = Color.White,
           fontWeight = FontWeight.Bold,
-          color = Color(0xFF5D4037),
-        ),
-        textAlign = TextAlign.Center,
-      )
-
-      Text(
-        text = recipe.category,
-        color = Color(0xFFD84315),
-        style = MaterialTheme.typography.bodyLarge,
-        modifier = Modifier.padding(top = 4.dp),
-      )
-
-      Spacer(Modifier.height(24.dp))
-
-      RecipeListIngredients(recipe)
-
-      Spacer(Modifier.height(24.dp))
-
-      RecipeListInstructions(recipe)
-
-      Spacer(Modifier.height(24.dp))
-
-      recipe.youtubeLink.let { url ->
-        Button(
-          onClick = {
-            viewModel.handleAction(RecipeByIdUiAction.OpenYoutubeLink(url))
-          },
-          colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFFFF7043),
+          shadow = Shadow(
+            color = Color.Black.copy(alpha = 0.6f),
+            offset = Offset(2f, 2f),
+            blurRadius = 4f,
           ),
-          shape = RoundedCornerShape(50),
-          modifier = Modifier
-            .fillMaxWidth(0.8f)
-            .height(50.dp),
-        ) {
-          Text(stringResource(R.string.see_on_youtube), color = Color.White)
-        }
-      }
-
-      Spacer(Modifier.height(32.dp))
+        ),
+      )
+      Text(
+        recipe.category,
+        style = MaterialTheme.typography.bodyMedium.copy(color = Color.White.copy(alpha = 0.85f)),
+      )
     }
   }
 }
 
 @Composable
-private fun RecipeListInstructions(recipe: Recipe) {
+private fun RecipeInfoSection(recipe: Recipe) {
   Card(
-    modifier = Modifier.fillMaxWidth(),
-    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
-    elevation = CardDefaults.cardElevation(4.dp),
-    shape = RoundedCornerShape(16.dp),
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(horizontal = 16.dp),
+    shape = RoundedCornerShape(20.dp),
+    elevation = CardDefaults.cardElevation(6.dp),
+    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
   ) {
-    Column(Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.padding(16.dp)) {
       Text(
-        stringResource(R.string.how_to_prepare),
+        text = stringResource(R.string.overview),
         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
       )
       Spacer(Modifier.height(8.dp))
       Text(
         text = recipe.instructions,
-        style = MaterialTheme.typography.bodyLarge,
-        color = Color(0xFF4E342E),
+        style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant),
       )
     }
   }
@@ -222,42 +210,77 @@ private fun RecipeListInstructions(recipe: Recipe) {
 
 @Composable
 private fun RecipeListIngredients(recipe: Recipe) {
-  Card(
-    modifier = Modifier.fillMaxWidth(),
-    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
-    elevation = CardDefaults.cardElevation(4.dp),
-    shape = RoundedCornerShape(16.dp),
-  ) {
-    Column(Modifier.padding(16.dp)) {
+  SectionCard(title = stringResource(R.string.ingredients)) {
+    recipe.ingredients.forEach { ingredient ->
       Text(
-        stringResource(R.string.ingredients),
-        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
+        "• $ingredient",
+        style = MaterialTheme.typography.bodyLarge.copy(
+          color = MaterialTheme.colorScheme.onSurfaceVariant,
+        ),
+        modifier = Modifier.padding(vertical = 2.dp),
       )
-
-      Spacer(Modifier.height(8.dp))
-
-      recipe.ingredients.forEach { ingredient ->
-        Text(stringResource(R.string.bullet_point, ingredient), color = Color(0xFF3E2723))
-      }
     }
   }
 }
 
 @Composable
-private fun RecipeListItemHeader(meal: Recipe) {
+private fun RecipeListInstructions(recipe: Recipe) {
+  SectionCard(title = stringResource(R.string.how_to_prepare)) {
+    Text(
+      text = recipe.instructions,
+      style = MaterialTheme.typography.bodyLarge.copy(
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        lineHeight = 22.sp,
+      ),
+    )
+  }
+}
+
+@Composable
+private fun SectionCard(
+  title: String,
+  content: @Composable ColumnScope.() -> Unit,
+) {
   Card(
     modifier = Modifier
       .fillMaxWidth()
-      .height(260.dp)
-      .clip(RoundedCornerShape(24.dp))
-      .shadow(8.dp, RoundedCornerShape(24.dp)),
-    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
+      .padding(horizontal = 16.dp),
+    shape = RoundedCornerShape(20.dp),
+    elevation = CardDefaults.cardElevation(4.dp),
+    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
   ) {
-    Image(
-      painter = rememberAsyncImagePainter(meal.thumb),
-      contentDescription = meal.meal,
-      modifier = Modifier.fillMaxSize(),
-      contentScale = ContentScale.Crop,
+    Column(Modifier.padding(16.dp)) {
+      Text(
+        title,
+        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
+      )
+      Spacer(Modifier.height(8.dp))
+      content()
+    }
+  }
+}
+
+@Composable
+private fun RecipeYoutubeButton(onClick: () -> Unit) {
+  Button(
+    onClick = onClick,
+    colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+    shape = RoundedCornerShape(50),
+    modifier = Modifier
+      .padding(horizontal = 32.dp, vertical = 16.dp)
+      .fillMaxWidth()
+      .height(50.dp),
+  ) {
+    Icon(
+      imageVector = Icons.Default.PlayArrow,
+      contentDescription = null,
+      tint = Color.White,
+    )
+    Spacer(Modifier.width(8.dp))
+    Text(
+      text = stringResource(R.string.see_on_youtube),
+      color = Color.White,
+      style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.SemiBold),
     )
   }
 }
