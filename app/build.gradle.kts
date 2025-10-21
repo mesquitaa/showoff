@@ -54,6 +54,7 @@ dependencies {
   implementation(project(":core:core-ui"))
   implementation(project(":feature:category-list"))
   implementation(project(":feature:recipe-by-category-list"))
+  implementation(project(":feature:recipe-by-id"))
 
   // AndroidX
   implementation(libs.androidx.core.ktx)

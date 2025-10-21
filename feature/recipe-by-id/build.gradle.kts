@@ -1,27 +1,19 @@
-import java.util.Properties
-
 plugins {
   alias(libs.plugins.android.library)
   alias(libs.plugins.kotlin.android)
+  alias(libs.plugins.kotlin.compose)
 }
 
 android {
-  namespace = "com.rpm.core.network"
+  namespace = "com.rpm.recipe.by.id"
   compileSdk = libs.versions.compileSdk.get().toInt()
 
   defaultConfig {
     minSdk = libs.versions.minSdk.get().toInt()
-
-    val localProps = Properties().apply {
-      load(rootProject.file("local.properties").inputStream())
-    }
-    val apiKey: String = localProps.getProperty("API_KEY") ?: ""
-    buildConfigField("String", "API_KEY", "\"$apiKey\"")
-    buildConfigField("String", "BASE_URL", "\"https://www.themealdb.com/api/json/\"")
   }
 
   buildFeatures {
-    buildConfig = true
+    compose = true
   }
 
   buildTypes {
@@ -51,24 +43,33 @@ kotlin {
 
 dependencies {
   implementation(project(":domain:meal-domain"))
+  implementation(project(":core:core-ui"))
+  implementation(project(":core:core-common"))
 
-  // Koin
-  implementation(libs.koin.android)
+  implementation(platform(libs.androidx.compose.bom))
+  implementation(libs.androidx.ui)
+  implementation(libs.androidx.ui.tooling.preview)
+  implementation(libs.androidx.material3)
+
+  debugImplementation(libs.androidx.ui.tooling)
+  debugImplementation(libs.androidx.ui.test.manifest)
 
   // Retrofit & OkHttp
   implementation(libs.retrofit)
-  implementation(libs.converter.gson)
-  implementation(libs.logging.interceptor)
 
-  // Coroutines
-  implementation(libs.kotlinx.coroutines.android)
+  // Koin
+  implementation(libs.koin.androidx.compose)
 
-  testImplementation(libs.mockwebserver)
+  // Coil for image loading
+  implementation(libs.coil.compose)
+
+  // Unit Test
   testImplementation(kotlin("test"))
   testImplementation(libs.junit.jupiter)
   testRuntimeOnly(libs.junit.vintage.engine)
-  testImplementation(libs.mockk)
   testImplementation(libs.coroutines.test)
+  testImplementation(libs.mockk)
+  testImplementation(libs.mockwebserver)
 }
 
 apply(from = "$rootDir/config/ktlint/ktlint.gradle.kts")

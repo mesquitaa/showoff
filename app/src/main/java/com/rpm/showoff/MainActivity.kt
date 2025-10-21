@@ -1,5 +1,7 @@
 package com.rpm.showoff
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -24,10 +26,18 @@ class MainActivity : ComponentActivity() {
             modifier = Modifier.padding(innerPadding),
             color = MaterialTheme.colorScheme.background,
           ) {
-            MealNavigation()
+            MealNavigation(onYouTubeLinkClicked = ::watchYoutubeVideo)
           }
         }
       }
     }
+  }
+
+  private fun watchYoutubeVideo(url: String) {
+    val webIntent = Intent(
+      Intent.ACTION_VIEW,
+      Uri.parse(url),
+    )
+    startActivity(webIntent)
   }
 }

@@ -33,3 +33,4 @@ include(":domain:meal-domain")
 // Features module
 include(":feature:category-list")
 include(":feature:recipe-by-category-list")
+include(":feature:recipe-by-id")

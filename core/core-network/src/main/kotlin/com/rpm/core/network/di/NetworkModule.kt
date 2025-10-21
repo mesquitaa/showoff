@@ -1,5 +1,8 @@
 package com.rpm.core.network.di
 
+import com.google.gson.GsonBuilder
+import com.rpm.core.domain.RecipeDeserializer
+import com.rpm.core.domain.entity.Recipe
 import com.rpm.core.network.BuildConfig
 import com.rpm.core.network.interceptor.AuthInterceptor
 import okhttp3.OkHttpClient
@@ -35,8 +38,12 @@ private fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit
   .Builder()
   .baseUrl(BuildConfig.BASE_URL)
   .client(okHttpClient)
-  .addConverterFactory(GsonConverterFactory.create())
+  .addConverterFactory(GsonConverterFactory.create(provideCustomGson()))
   .build()
+
+private fun provideCustomGson() = GsonBuilder()
+  .registerTypeAdapter(Recipe::class.java, RecipeDeserializer())
+  .create()
 
 private fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor, authInterceptor: AuthInterceptor): OkHttpClient = OkHttpClient
   .Builder()
