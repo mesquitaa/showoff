@@ -126,8 +126,10 @@ config/ # Build / CI configuration
 4. Run from **Android Studio**
    Open the project in Android Studio, let Gradle sync, then run the app configuration on a device or emulator.
 5. 🧪 **Tests**
-5.1 Unit tests live inside each module’s `src/test` directory.
-5.2 Run all tests
+   
+   5.1. Unit tests live inside each module's `src/test` directory.
+   
+   5.2. Run all tests
    ```bash
    ./gradlew testDebug
    ```
