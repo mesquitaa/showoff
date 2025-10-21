@@ -127,7 +127,7 @@ private fun CategoryGrid(
 }
 
 @Composable
-fun CategoryCard(
+private fun CategoryCard(
   category: Category,
   onClick: () -> Unit,
 ) {

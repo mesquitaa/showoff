@@ -213,7 +213,7 @@ private fun RecipeListIngredients(recipe: Recipe) {
   SectionCard(title = stringResource(R.string.ingredients)) {
     recipe.ingredients.forEach { ingredient ->
       Text(
-        "• $ingredient",
+        stringResource(R.string.bullet_point, ingredient),
         style = MaterialTheme.typography.bodyLarge.copy(
           color = MaterialTheme.colorScheme.onSurfaceVariant,
         ),
