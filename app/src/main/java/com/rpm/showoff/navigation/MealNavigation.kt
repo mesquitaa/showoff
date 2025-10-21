@@ -1,6 +1,5 @@
 package com.rpm.showoff.navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -8,9 +7,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.rpm.category.list.ui.CategoryListScreen
 import com.rpm.recipe.by.categories.ui.MealByCategoryScreen
+import com.rpm.recipe.by.id.ui.RecipeByIdScreen
 
 @Composable
-fun MealNavigation(navController: NavHostController = rememberNavController()) {
+fun MealNavigation(
+  navController: NavHostController = rememberNavController(),
+  onYouTubeLinkClicked: (String) -> Unit,
+) {
   NavHost(
     navController = navController,
     startDestination = Routes.RecipeCategoriesList.route,
@@ -39,8 +42,12 @@ fun MealNavigation(navController: NavHostController = rememberNavController()) {
     }
 
     composable(Routes.MealRecipe.route) { backStackEntry ->
-      val recipeId = backStackEntry.arguments?.getString(RECIPE_ID)?.toInt() ?: 0
-      Text(text = "Meal Recipe $recipeId")
+      val recipeId = backStackEntry.arguments?.getString(RECIPE_ID)
+      RecipeByIdScreen(
+        recipeId = recipeId.orEmpty(),
+        onBackPressed = navController::popBackStack,
+        onYoutubeLinkClicked = onYouTubeLinkClicked,
+      )
     }
   }
 }
