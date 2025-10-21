@@ -1,8 +1,12 @@
 package com.rpm.recipe.by.categories.ui
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,9 +27,16 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -70,36 +81,62 @@ fun MealByCategoryScreen(
   Scaffold(
     topBar = {
       TopAppBar(
-        title = { Text(category) },
+        title = {
+          Text(
+            text = category,
+            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
+          )
+        },
         navigationIcon = {
-          IconButton(onClick = { viewModel.handleAction(MealsByCategoryUiAction.NavigateBack) }) {
-            Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.back))
+          IconButton(onClick = {
+            viewModel.handleAction(MealsByCategoryUiAction.NavigateBack)
+          }) {
+            Icon(
+              imageVector = Icons.Default.ArrowBack,
+              contentDescription = stringResource(R.string.back),
+            )
           }
         },
       )
     },
-  ) { paddingValues ->
-    when {
-      uiState.isLoading -> LoadingIndicator()
-      uiState.error != null -> ErrorBox(uiState.error) {
-        viewModel.handleAction(MealsByCategoryUiAction.LoadData(category))
-      }
-      uiState.meals.isEmpty() -> EmptyState()
-      else -> {
-        LazyVerticalGrid(
-          columns = GridCells.Fixed(2),
-          modifier = Modifier.fillMaxSize(),
-          contentPadding = paddingValues,
-          verticalArrangement = Arrangement.spacedBy(16.dp),
-          horizontalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-          items(uiState.meals, key = { it.id }) { meal ->
-            MealByCategoryItem(meal) {
-              viewModel.handleAction(MealsByCategoryUiAction.SelectMeal(meal))
-            }
-          }
+  ) { padding ->
+    Box(
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(padding),
+      contentAlignment = Alignment.Center,
+    ) {
+      when {
+        uiState.isLoading -> LoadingIndicator()
+        uiState.error != null -> ErrorBox(uiState.error) {
+          viewModel.handleAction(MealsByCategoryUiAction.LoadData(category))
         }
+        uiState.meals.isEmpty() -> EmptyState()
+        else -> MealGrid(
+          meals = uiState.meals,
+          onMealClick = { meal ->
+            viewModel.handleAction(MealsByCategoryUiAction.SelectMeal(meal))
+          },
+        )
       }
+    }
+  }
+}
+
+@Composable
+private fun MealGrid(
+  meals: List<Meal>,
+  onMealClick: (Meal) -> Unit,
+) {
+  LazyVerticalGrid(
+    columns = GridCells.Adaptive(minSize = 160.dp),
+    contentPadding = PaddingValues(16.dp),
+    verticalArrangement = Arrangement.spacedBy(16.dp),
+    horizontalArrangement = Arrangement.spacedBy(16.dp),
+    modifier = Modifier.fillMaxSize(),
+  ) {
+    items(meals, key = { it.id }) { meal ->
+      MealByCategoryItem(meal, onClick = { onMealClick(meal) })
     }
   }
 }
@@ -110,32 +147,59 @@ fun MealByCategoryItem(
   onClick: () -> Unit,
 ) {
   Card(
-    modifier =
-      Modifier
-        .fillMaxWidth()
-        .clickable(onClick = onClick),
-    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-    colors = CardDefaults.cardColors(
-      containerColor = MaterialTheme.colorScheme.background,
-    ),
+    modifier = Modifier
+      .fillMaxWidth()
+      .animateContentSize()
+      .clickable(onClick = onClick),
+    shape = MaterialTheme.shapes.medium,
+    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
   ) {
-    Column(
-      modifier = Modifier.padding(12.dp),
-    ) {
+    Box {
       AsyncImage(
         model = meal.thumb,
-        contentDescription = stringResource(id = R.string.content_description_category_thumbnail),
-        modifier =
-          Modifier
-            .fillMaxWidth(1f),
+        contentDescription = stringResource(R.string.content_description_category_thumbnail),
+        modifier = Modifier
+          .fillMaxWidth()
+          .aspectRatio(1f)
+          .clip(MaterialTheme.shapes.medium),
         contentScale = ContentScale.Crop,
       )
 
+      Box(
+        modifier = Modifier
+          .matchParentSize()
+          .background(Color.Black.copy(alpha = 0.25f)),
+      )
+
+      Box(
+        modifier = Modifier
+          .fillMaxSize()
+          .background(
+            Brush.verticalGradient(
+              colors = listOf(
+                Color.Transparent,
+                Color.Black.copy(alpha = 0.75f),
+              ),
+              startY = 100f,
+            ),
+          ),
+      )
+
       Text(
-        modifier = Modifier.padding(top = 16.dp),
         text = meal.meal,
-        style = MaterialTheme.typography.titleMedium,
-        maxLines = 1,
+        modifier = Modifier
+          .align(Alignment.BottomStart)
+          .padding(12.dp),
+        style = MaterialTheme.typography.titleMedium.copy(
+          color = Color.White,
+          fontWeight = FontWeight.SemiBold,
+          shadow = Shadow(
+            color = Color.Black.copy(alpha = 0.6f),
+            offset = Offset(1f, 1f),
+            blurRadius = 2f,
+          ),
+        ),
+        maxLines = 2,
         overflow = TextOverflow.Ellipsis,
       )
     }

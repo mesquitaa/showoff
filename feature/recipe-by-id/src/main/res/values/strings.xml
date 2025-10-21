@@ -2,8 +2,9 @@
 <resources>
   <string name="content_description_category_thumbnail">Category Thumbnail</string>
   <string name="back">Back</string>
-  <string name="see_on_youtube">▶️ See on YouTube</string>
+  <string name="see_on_youtube">See on YouTube</string>
   <string name="how_to_prepare">🧑‍🍳 How to prepare</string>
   <string name="ingredients">🧂 Ingredients</string>
   <string name="bullet_point">• %1$s</string>
+  <string name="overview">🍽️ Overview</string>
 </resources>
