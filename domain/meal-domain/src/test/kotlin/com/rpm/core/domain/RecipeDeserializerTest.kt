@@ -40,11 +40,10 @@ class RecipeDeserializerTest {
     assertEquals(2, recipe.ingredients.size)
     assertTrue(recipe.ingredients.contains("soy sauce - 3/4 cup"))
     assertTrue(recipe.ingredients.contains("water - 1/2 cup"))
-    assertEquals("https://www.themealdb.com/meal/52772", recipe.source)
   }
 
   @Test
-  fun `deve lidar com campos ausentes sem falhar`() {
+  fun `should handle missing fields`() {
     val json = """{ "idMeal": "99999" }"""
     val recipe = gson.fromJson(json, Recipe::class.java)
 

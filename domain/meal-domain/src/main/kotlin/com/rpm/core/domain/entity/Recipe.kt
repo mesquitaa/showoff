@@ -8,5 +8,4 @@ data class Recipe(
   val instructions: String,
   val youtubeLink: String,
   val ingredients: List<String>,
-  val source: String,
 )

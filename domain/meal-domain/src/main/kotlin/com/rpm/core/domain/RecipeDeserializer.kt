@@ -19,8 +19,8 @@ class RecipeDeserializer : JsonDeserializer<Recipe> {
 
     val ingredients = mutableListOf<String>()
     for (i in 1..20) {
-      val ingredientName = jsonObj["strIngredient$i"]?.asString
-      val measure = jsonObj["strMeasure$i"]?.asString
+      val ingredientName = jsonObj["strIngredient$i"]?.takeUnless { it.isJsonNull }?.asString
+      val measure = jsonObj["strMeasure$i"]?.takeUnless { it.isJsonNull }?.asString
 
       if (!ingredientName.isNullOrBlank()) {
         ingredients.add("${ingredientName.trim()} - ${measure?.trim().orEmpty()}")
@@ -35,7 +35,6 @@ class RecipeDeserializer : JsonDeserializer<Recipe> {
       thumb = thumb.orEmpty(),
       youtubeLink = youtube.orEmpty(),
       ingredients = ingredients,
-      source = jsonObj["strSource"]?.asString.orEmpty(),
     )
   }
 }
